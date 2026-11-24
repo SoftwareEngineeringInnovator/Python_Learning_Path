@@ -12,6 +12,9 @@ wb = load_workbook("./spreadsheets/Friendly_Store_Inventory.xlsx")
 # Select the inventory worksheet
 ws = wb["CURRENT_MONTH_INVENTORY"]
 
+# Add heading for reorder amounts column F
+ws["F1"] = "order_amount"
+
 # Define a function called add_order_amount that takes in a single parameter called 'row'
 # Define a function to calculate reorder amounts
 def add_order_amount(row):
@@ -37,4 +40,12 @@ def add_order_amount(row):
         ws.cell(row = row, column = 6, value = order_amount)
 
 # Perform a for..in loop through the range(2, len(inventory.rows))
-#   - call the function add_order_amount() passing in the number of the range
+# Call the function add_order_amount() passing in the number of the range
+
+# Loop through all inventory rows, skipping the header
+for row in range(2, ws.max_row + 1):
+    add_order_amount(row)
+
+# Save the updated inventory workbook
+wb.save("./spreadsheets/Friendly_Store_Reorder.xlsx")
+
