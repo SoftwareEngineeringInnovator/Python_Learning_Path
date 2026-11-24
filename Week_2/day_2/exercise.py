@@ -1,66 +1,40 @@
-
 # ITP Week 2 Day 2 Exercise
-# Functions, Parameters, Scope, and Return
 
-# 1. Functions with Dictionaries
+# Import the workbook that you updated in today's practice from
+# Import load_workbook from openpyxl
+from openpyxl import load_workbook
 
-student_1 = {
-    "name": "Amy",
-    "major": "Computer Science",
-    "grades": [90, 85, 95]
-}
+# "./spreadsheets/inventory.xlsx"
+# Load the inventory workbook created in Week 2 Day 1
+wb = load_workbook("./spreadsheets/Friendly_Store_Inventory.xlsx")
 
-student_2 = {
-    "name": "John",
-    "major": "Cybersecurity",
-    "grades": [80, 88, 92]
-}
+# access and store the appropriate worksheet to the variable 'ws'
+# Select the inventory worksheet
+ws = wb["CURRENT_MONTH_INVENTORY"]
 
-# a. Create a function named show_student that accepts
-# a dictionary as a parameter and prints the student's
-# name and major.
+# Define a function called add_order_amount that takes in a single parameter called 'row'
+# Define a function to calculate reorder amounts
+def add_order_amount(row):
+    
+    # Retrieve inventory values
+    max_amount = ws.cell(row = row, column = 3).value
+    threshold = ws.cell(row = row, column = 4).value
+    quantity = ws.cell(row = row, column = 5).value
 
-# b. Call the function for both students.
+    # IF the quantity is less or equal to than the threshold,
 
+        # than calculate the order_amount (max_amount - quantity) 
+        # assign the value to that row, column 6
+# TIP: create variables for quantity, threshold, max_amount that retrieves the values first for cleanliness
+    
+    # Check if quantity is at or below reorder threshold
+    if quantity <= threshold:
 
-# 2. Explicit Returns
+        # Calculate the amount to be ordered
+        order_amount = max_amount - quantity
 
-# a. Create a function named calculate_average that
-# accepts a list of grades as a parameter.
+        # Write reorder amount to column F
+        ws.cell(row = row, column = 6, value = order_amount)
 
-# b. Use a for loop to calculate the total of the grades.
-
-# c. Return the average using the total and len().
-
-# d. Call the function using each student's grades.
-# Store and print both returned averages.
-
-
-# 3. Scope and Global Variables
-
-students_processed = 0
-
-# a. Create a function named process_student that
-# accepts a student dictionary as a parameter.
-
-# b. Inside the function, use the global keyword
-# to increase students_processed by 1.
-
-# c. Print the student's name inside the function.
-
-# d. Call the function for both students.
-
-# e. Print students_processed outside the function.
-
-
-# 4. Challenge: Combining Functions
-
-# Create a function named check_pass that accepts
-# a list of grades as a parameter.
-
-# Use calculate_average() inside your new function.
-
-# If the average is 70 or higher, return "Passed".
-# Otherwise, return "Failed".
-
-# Call check_pass() for both students and print the results.
+# Perform a for..in loop through the range(2, len(inventory.rows))
+#   - call the function add_order_amount() passing in the number of the range

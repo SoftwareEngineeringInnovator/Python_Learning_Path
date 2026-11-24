@@ -1,48 +1,143 @@
-
 # ITP Week 2 Day 1 Exercise
-# Dictionaries, Loops, and Nested Dictionaries
 
-# 1. Dictionary Loop
+# Import Workbook from openpyxl
+from openpyxl import Workbook
 
-inventory = {
-    "soda_cans": 45,
-    "chips": 12,
-    "sandwiches": 34,
-    "candy": 0
-}
+# Create a new workbook
+wb = Workbook()
 
-# SCENARIO: A customer bought one of every available item!
+# Select the active worksheet
+ws = wb.active
 
-# Use a for loop to decrease each item's quantity by 1
-# Do not allow any quantity to go below 0
+# Rename the worksheet
+ws.title = "CURRENT_MONTH_INVENTORY"
 
-# Print each item and its updated quantity using .items()
+# SCENARIO: You're a store owner receiving the inventory report for this month.
+# You will receive the product order spreadsheet soon and it is easier to calculate your order
+# if your inventory was also on a spreadsheet! Recreate the following spreadsheet with Python: 
 
+# don't forget your appropriate imports.
+# assign the title of the initial active sheet to "CURRENT_MONTH_INVENTORY"
 
-# 2. Nested Dictionaries
+#   product_name    product_id  max_amount      reorder_threshold   quantity
+# 	oreo            2323        1000            300                 743
+# 	coke            6545        500             100                 101
+# 	pepsi	        3456        200             50                  137
+# 	lays_chip	    4567        1500            500                 364
+# 	pringles	    2134        2000            600                 120
+# 	sour_worms	    2362        100             10                  85
+# 	choco_cookies   0923	    200             25                  24
+# 	donuts	        2786        200             25                  12
+# 	hot_dogs	    6723        100             10                  39
+# 	ice_cream	    9237        200             50                  234
+# 	gum	            2092        3500            1000                1232
+# 	pretzels        8246	    100             5                   11
+# 	kit_kat	        9276        1000            250                 249
 
-students = {
-    "student1": {
-        "name": "Amy",
-        "grades": [90, 85, 95]
-    },
-    "student2": {
-        "name": "John",
-        "grades": [80, 88, 92]
-    }
-}
+# TIP: create a list of each column (ie. product_names = [oreo, ...]) and use those to loop through :)
+ws.append([
+    "product_name",
+    "product_id",
+    "max_amount",
+    "reorder_threshold",
+    "quantity"
+])
 
-# a. Print John's second grade
+# Define Product names
+product_names = [
+    "oreo",
+    "coke",
+    "pepsi",
+    "lays_chip",
+    "pringles",
+    "sour_worms",
+    "choco_cookies",
+    "donuts",
+    "hot_dogs",
+    "ice_cream",
+    "gum",
+    "pretzels",
+    "kit_kat"
+]
 
-# b. Update Amy's first grade to 100
+# Defining Products IDs
+product_ids = [
+    "2323",
+    "6545",
+    "3456",
+    "4567",
+    "2134",
+    "2362",
+    "0923",
+    "2786",
+    "6723",
+    "9237",
+    "2092",
+    "8246",
+    "9276"
+]
 
-# c. Add a new grade of 95 to John's grades list
+# Define maximum Inventory Amounts
+max_amounts = [
+    1000,
+    500,
+    200,
+    1500,
+    2000,
+    100,
+    200,
+    200,
+    100,
+    200,
+    3500,
+    100,
+    1000
+]
 
-# d. Add a new key "major" with the value "Computer Science"
-#    to Amy's dictionary
+# Define Reorder Thresholds
+reorder_thresholds = [
+    300,
+    100,
+    50,
+    500,
+    600,
+    10,
+    25,
+    25,
+    10,
+    50,
+    1000,
+    5,
+    250
+]
 
-# e. Loop through students using .items()
-#    and print each student's name and grades
+# Define Inventory Quantities
+quantities = [
+    743,
+    101,
+    137,
+    364,
+    120,
+    85,
+    24,
+    12,
+    39,
+    234,
+    1232,
+    11,
+    249
+]
 
-# f. Calculate and print each student's average grade
-#    Hint: Use sum() and len()
+# Create a for-loop to add inventory data into the Excel sheet
+for i in range(len(product_names)):
+    ws.append([
+        product_names[i],
+        product_ids[i],
+        max_amounts[i],
+        reorder_thresholds[i],
+        quantities[i]
+
+    ])
+# save your file
+
+wb.save("./spreadsheets/Friendly_Store_Inventory.xlsx")
