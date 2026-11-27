@@ -1,57 +1,89 @@
-# ITP Week 2 Day 3 Exercise
-# Modules, Dictionaries, Functions, and Excel Automation
+# Magic 8 ball!
 
-# SCENARIO:
-# You are creating an Excel report for a small store.
-# The store wants to track products, prices, and inventory.
+import random
+from openpyxl import Workbook
 
-
-# 1. Import the random module and Workbook from openpyxl.
-
-
-# 2. Create a workbook and rename the active
-# worksheet to "Store Inventory".
-
-
-# 3. Add these headers using ws.append():
-# Product, Price, Quantity
+fortunes = ['It is certain',
+              'It is decidedly so',
+              'Yes',
+              'Reply hazy try again',
+              'Ask again later',
+              'Concentrate',
+              'My reply is no',
+              'Outlook not so good',
+              'Very doubtful']
 
 
-# 4. Use the following list of dictionaries:
+def get_fortune():
+    return random.choice(fortunes)
 
-products = [
-    {"name": "Apples", "price": 2.756},
-    {"name": "Bananas", "price": 1.894},
-    {"name": "Oranges", "price": 3.459},
-    {"name": "Grapes", "price": 4.125}
+fate = get_fortune()
+
+print(fate)
+
+# Given the function above, it will randomly choose from the fortunes list and print one.
+# Using this concept we will create our own function for a new workbook in openpyxl
+
+# Create workbook
+wb = Workbook()
+
+# Select active worksheet
+ws = wb.active
+
+# Define column headings
+ws["A1"] = "Random_Generated_Code"
+ws["B1"] = "Random_Generated_Name"
+ws["C1"] = "Random_Generated_Last_Name"
+
+# Create a list called first_names and prepopulate with 10 custom first names
+first_names = [
+    "Amy",
+    "John",
+    "Jessica",
+    "David",
+    "Sarah",
+    "Daniel",
+    "Maria",
+    "Alex",
+    "James",
+    "Emily"
 ]
 
+# Create a list called last_names and prepopulate with 10 custom last names
+last_names = [
+    "Smith",
+    "Johnson",
+    "Williams",
+    "Brown",
+    "Jones",
+    "Garcia",
+    "Martinez",
+    "Davis",
+    "Wilson",
+    "Anderson"
+]
 
-# 5. Create a function named add_product(product).
-#
-# a. Get the name and price from the dictionary.
-# b. Round the price to 2 decimal places.
-# c. Generate a random quantity between 5 and 50.
-# d. Use ws.append() to add the information to Excel.
+# Define a function called assign_names with a parameter 'row'
+def assign_names(row):
 
+    # - cell at row=row and column=1 assign the value to str(random.randint(111111, 999999))
+    # Generate a random six-digit user ID
+    ws.cell(row = row, column = 1, value=str(random.randint(111111, 999999)))
 
-# 6. Loop through products and call add_product()
-# for each dictionary.
+    # - cell at row=row and column=2 assign the value to a random choice of first name
+    # Assign a random first name to column B
+    ws.cell(row = row, column =2, value=random.choice(first_names))
 
+    # - cell at row=row and column=3 assign the value to a random choice of last name
+    # Assign a random last name to column C
+    ws.cell(row = row, column = 3, value=random.choice(last_names))
 
-# 7. Use ws.iter_rows(values_only=True) to
-# print the worksheet data.
+# set up appropriately for a new workbook and worksheet
 
+# loop through the range of 1-10 and for each number in the range
+# - call/invoke the assign_names function while passing in the number as the 'row' argument
+for row in range(2, 12):
+    assign_names(row)
 
-# 8. Create a second worksheet named "Summary".
-# Add "Total Products" to A1 and use len()
-# to add the number of products to B1.
-
-
-# 9. Save the workbook as "store_inventory.xlsx".
-
-
-# BONUS:
-# Use random.choice() to select a random product
-# and print its name.
-
+# save your new workbook!
+wb.save("./spreadsheets/generating_random_names_exercise.xlsx")
