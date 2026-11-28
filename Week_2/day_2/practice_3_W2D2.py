@@ -1,5 +1,5 @@
 
-# ITP Week 2 Day 2 (In-Class) Practice
+# ITP Week 2 Day 2 (In-Class) Practice 3
 # Functions
 
 # 1. Create a function named greeting that prints
